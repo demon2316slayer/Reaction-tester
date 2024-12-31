@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Timer</title>
+    <style>
+        #shape {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: absolute;
+        }
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test your reactions!</h1>
+    <p>Click on the boxes as quickly as you can</p>
+    <div id="shape"></div>
+
+    <script>
+        let start = new Date().getTime(); // Time when the page loads
+
+        function getRandomColor() {
+            // Generate a random color in hexadecimal
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function move() {
+            let left = Math.random() * 300;
+            let top = Math.random() * 300;
+            let size = (Math.random() * 400) + 100;
+
+            // Move the box
+            let shape = document.getElementById("shape");
+            shape.style.left = left + "px";
+            shape.style.top = top + "px";
+            shape.style.width = size + "px";
+            shape.style.height = size + "px";
+
+            // Change background color
+            shape.style.backgroundColor = getRandomColor();
+
+            shape.style.display = "block";
+            start = new Date().getTime(); // Reset the timer
+        }
+
+        // Handle box click
+        document.getElementById("shape").onclick = function() {
+            this.style.display = "none"; // Hide the box
+            let end = new Date().getTime();
+            let timeTaken = (end - start) / 1000; // Calculate reaction time
+            alert("Your time: " + timeTaken + "s"); // Show the time
+            move(); // Display the box again
+        };
+
+        move(); // Initialize the game
+    </script>
+</body>
+</html>
